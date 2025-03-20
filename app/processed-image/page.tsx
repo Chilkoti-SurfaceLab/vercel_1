@@ -1,49 +1,51 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
-import ImageViewer from "../components/ImageViewer"
-import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import ImageViewer from "../components/ImageViewer";
+import { Button } from "@/components/ui/button";
+
+export const dynamic = "force-dynamic"; // Prevents pre-rendering issues
 
 interface Circle {
-  x: number
-  y: number
-  id: string
-  radius: number
+  x: number;
+  y: number;
+  id: string;
+  radius: number;
 }
 
 interface Cluster {
-  id: string
-  circles: Circle[]
-  name: string
+  id: string;
+  circles: Circle[];
+  name: string;
 }
 
 export default function ProcessedImagePage() {
-  const searchParams = useSearchParams()
-  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null)
-  const [circles, setCircles] = useState<Circle[]>([])
-  const [clusters, setClusters] = useState<Cluster[]>([])
+  const searchParams = useSearchParams();
+  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null);
+  const [circles, setCircles] = useState<Circle[]>([]);
+  const [clusters, setClusters] = useState<Cluster[]>([]);
 
   useEffect(() => {
-    const originalUrl = searchParams.get("originalImageUrl")
+    const originalUrl = searchParams.get("originalImageUrl");
     if (originalUrl) {
-      setOriginalImageUrl(originalUrl)
+      setOriginalImageUrl(originalUrl);
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const handleCirclesChange = (newCircles: Circle[], newClusters: Cluster[]) => {
-    setCircles(newCircles)
-    setClusters(newClusters)
-  }
+    setCircles(newCircles);
+    setClusters(newClusters);
+  };
 
   const handleFollowUpAnalysis = async () => {
-    console.log("Performing follow-up analysis with circles:", circles)
-    console.log("Clusters:", clusters)
+    console.log("Performing follow-up analysis with circles:", circles);
+    console.log("Clusters:", clusters);
     // You can send this data to your API for further processing
-  }
+  };
 
   if (!originalImageUrl) {
-    return <div>No image URL provided</div>
+    return <div>No image URL provided</div>;
   }
 
   return (
@@ -60,6 +62,5 @@ export default function ProcessedImagePage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
